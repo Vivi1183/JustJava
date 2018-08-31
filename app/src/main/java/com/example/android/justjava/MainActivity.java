@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import java.text.NumberFormat;
 
@@ -12,12 +13,15 @@ public class MainActivity extends AppCompatActivity {
 
     private CheckBox hasWhippedCream;
     private CheckBox hasChocolate;
+    private EditText nameEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         hasWhippedCream = (CheckBox) findViewById(R.id.has_whipped_cream);
         hasChocolate = (CheckBox) findViewById(R.id.has_chocolate);
+        nameEditText = (EditText) findViewById(R.id.name_edit_text);
 
     }
     int quantity = 0;
@@ -39,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private String createOrderSummary (){
         Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
         Boolean checkBoxChocolate = hasChocolate.isChecked();
-        String Message = "Name:" + "Viktoriia N." + "\nAdd whipped cream? " + checkBoxWhippedCream + "\nAdd chocolate? " + checkBoxChocolate + "\nQuantity:" + quantity + "\nTotal: " + calculatePrise () + " руб." + "\nThank you!";
+        String name = nameEditText.getText().toString();
+        String Message = "Name:" + name + "\nAdd whipped cream? " + checkBoxWhippedCream + "\nAdd chocolate? " + checkBoxChocolate + "\nQuantity:" + quantity + "\nTotal: " + calculatePrise () + " руб." + "\nThank you!";
         return Message;
     }
     public void increment(View view) {
