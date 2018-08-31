@@ -11,11 +11,14 @@ import java.text.NumberFormat;
 public class MainActivity extends AppCompatActivity {
 
     private CheckBox hasWhippedCream;
+    private CheckBox hasChocolate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         hasWhippedCream = (CheckBox) findViewById(R.id.has_whipped_cream);
+        hasChocolate = (CheckBox) findViewById(R.id.has_chocolate);
+
     }
     int quantity = 0;
     int price;
@@ -35,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private String createOrderSummary (){
         Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
-        String Message = "Name:" + "Viktoriia N." + "\nAdd whipped cream?" + checkBoxWhippedCream + "\nQuantity:" + quantity + "\nTotal: " + calculatePrise () + " руб." + "\nThank you!";
+        Boolean checkBoxChocolate = hasChocolate.isChecked();
+        String Message = "Name:" + "Viktoriia N." + "\nAdd whipped cream? " + checkBoxWhippedCream + "\nAdd chocolate? " + checkBoxChocolate + "\nQuantity:" + quantity + "\nTotal: " + calculatePrise () + " руб." + "\nThank you!";
         return Message;
     }
     public void increment(View view) {
