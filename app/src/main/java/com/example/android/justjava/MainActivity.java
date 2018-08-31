@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private CheckBox hasWhippedCream;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        hasWhippedCream = (CheckBox) findViewById(R.id.has_whipped_cream);
     }
     int quantity = 0;
     int price;
@@ -19,16 +23,19 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        String priceMessage = createOrderSummary ();
+                String priceMessage = createOrderSummary ();
         displayMessage(priceMessage);
     }
+
+
     private int calculatePrise () {
         int pricePerCup = 5;
         price = quantity * pricePerCup;
         return price;
     }
     private String createOrderSummary (){
-        String Message = "Name:" + "Viktoriia N." + "\nQuantity:" + quantity + "\nTotal: " + calculatePrise () + " руб." + "\nThank you!";
+        Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
+        String Message = "Name:" + "Viktoriia N." + "\nAdd whipped cream?" + checkBoxWhippedCream + "\nQuantity:" + quantity + "\nTotal: " + calculatePrise () + " руб." + "\nThank you!";
         return Message;
     }
     public void increment(View view) {
