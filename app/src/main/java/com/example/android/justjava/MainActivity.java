@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         nameEditText = (EditText) findViewById(R.id.name_edit_text);
 
     }
-    int quantity = 0;
+    int quantity = 2;
     int price;
     /**
      * This method is called when the order button is clicked.
@@ -59,21 +61,31 @@ public class MainActivity extends AppCompatActivity {
         Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
         Boolean checkBoxChocolate = hasChocolate.isChecked();
         String name = nameEditText.getText().toString();
-        String Message = "Name:" + name + "\nAdd whipped cream? " + checkBoxWhippedCream + "\nAdd chocolate? " + checkBoxChocolate + "\nQuantity:" + quantity + "\nTotal: " + calculatePrise () + " руб." + "\nThank you!";
+        String Message = "Name:" + name + "\nAdd whipped cream? " + checkBoxWhippedCream + "\nAdd chocolate? " + checkBoxChocolate + "\nQuantity:" + quantity + "\nTotal: $ " + calculatePrise ()  + "\nThank you!";
         return Message;
     }
     public void increment(View view) {
         Log.i("info", "calling increment method");
-        quantity = quantity+1;
-        displayQuantity (quantity);
+        if (quantity < 100) {
+            quantity = quantity+1;
+            displayQuantity (quantity);
+        } else {
+            Toast toastIncrement = Toast.makeText(getApplicationContext(), "You cannot have more than 100 coffee", Toast.LENGTH_SHORT);
+            toastIncrement.show();
+            return;
+        }
+
     }
     public void decrement(View view) {
         Log.i("info", "calling decrement method");
-        if (quantity > 0) {
+        if (quantity > 1) {
             quantity = quantity - 1;
             displayQuantity(quantity);
         }
-        else {quantity=0;}
+        else {
+            Toast toastDecrement = Toast.makeText(getApplicationContext(), "You cannot have less than 1 coffee", Toast.LENGTH_SHORT);
+            toastDecrement.show();
+            return;}
     }
     /**
      * This method displays the given quantity value on the screen.
