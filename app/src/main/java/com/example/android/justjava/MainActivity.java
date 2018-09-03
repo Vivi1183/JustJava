@@ -37,8 +37,23 @@ public class MainActivity extends AppCompatActivity {
 
     private int calculatePrise () {
         int pricePerCup = 5;
-        price = quantity * pricePerCup;
-        return price;
+        int pricePerWhippedCream = 1;
+        int pricePerChocolate = 2;
+        Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
+        Boolean checkBoxChocolate = hasChocolate.isChecked();
+        if (checkBoxWhippedCream == true){
+            if (checkBoxChocolate == true)
+                price = quantity * (pricePerCup + pricePerWhippedCream + pricePerChocolate);
+            else
+                price = quantity * (pricePerCup + pricePerWhippedCream);}
+
+        else {
+                if (checkBoxChocolate == true)
+                    price = quantity * (pricePerCup + pricePerChocolate);
+                else
+                    price = quantity * pricePerCup;}
+
+       return price;
     }
     private String createOrderSummary (){
         Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
