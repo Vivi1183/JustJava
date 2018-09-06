@@ -1,5 +1,6 @@
 package com.example.android.justjava;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 //        displayMessage(priceMessage);
 
         String name = nameEditText.getText().toString();
-        String subject = "JustJava order for " + name;
+        String subject = "JustJava " + getString(R.string.order_for) + name;
         String emailText = priceMessage;
 
         Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -76,7 +77,12 @@ public class MainActivity extends AppCompatActivity {
         Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
         Boolean checkBoxChocolate = hasChocolate.isChecked();
         String name = nameEditText.getText().toString();
-        String Message = "Name:" + name + "\nAdd whipped cream? " + checkBoxWhippedCream + "\nAdd chocolate? " + checkBoxChocolate + "\nQuantity:" + quantity + "\nTotal: $ " + calculatePrise ()  + "\nThank you!";
+        String Message = getString(R.string.order_summary_name, name);
+        Message += "\n" + getString(R.string.add_whipped_cream) + checkBoxWhippedCream;
+        Message += "\n" + getString(R.string.add_chocolate) + checkBoxChocolate;
+        Message += "\n" + getString(R.string.quantity) + ": " + quantity;
+        Message += "\n" + getString(R.string.total) + calculatePrise ();
+        Message += "\n" + getString(R.string.thank_you);
         return Message;
     }
     public void increment(View view) {
