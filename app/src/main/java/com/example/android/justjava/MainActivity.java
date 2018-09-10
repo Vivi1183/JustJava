@@ -17,10 +17,11 @@ import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity {
 
+    int quantity = 2;
+    int price;
     private CheckBox hasWhippedCream;
     private CheckBox hasChocolate;
     private EditText nameEditText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,17 +32,18 @@ public class MainActivity extends AppCompatActivity {
         nameEditText = (EditText) findViewById(R.id.name_edit_text);
 
     }
-    int quantity = 2;
-    int price;
+
     /**
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-              String priceMessage = createOrderSummary ();
+        String priceMessage = createOrderSummary();
 //        displayMessage(priceMessage);
 
         String name = nameEditText.getText().toString();
-        String subject = "JustJava " + getString(R.string.order_for) + name;
+
+
+        String subject = "JustJava " + getString(R.string.order_for) +  name;
         String emailText = priceMessage;
 
         Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -53,61 +55,74 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private int calculatePrise () {
+    private int calculatePrise() {
         int pricePerCup = 5;
         int pricePerWhippedCream = 1;
         int pricePerChocolate = 2;
         Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
         Boolean checkBoxChocolate = hasChocolate.isChecked();
-        if (checkBoxWhippedCream == true){
+        if (checkBoxWhippedCream == true) {
             if (checkBoxChocolate == true)
                 price = quantity * (pricePerCup + pricePerWhippedCream + pricePerChocolate);
             else
-                price = quantity * (pricePerCup + pricePerWhippedCream);}
+                price = quantity * (pricePerCup + pricePerWhippedCream);
+        } else {
+            if (checkBoxChocolate == true)
+                price = quantity * (pricePerCup + pricePerChocolate);
+            else
+                price = quantity * pricePerCup;
+        }
 
-        else {
-                if (checkBoxChocolate == true)
-                    price = quantity * (pricePerCup + pricePerChocolate);
-                else
-                    price = quantity * pricePerCup;}
-
-       return price;
+        return price;
     }
-    private String createOrderSummary (){
+
+    private String createOrderSummary() {
         Boolean checkBoxWhippedCream = hasWhippedCream.isChecked();
         Boolean checkBoxChocolate = hasChocolate.isChecked();
+        String checkBoxWhippedCreamString;
+        String checkBoxChocolateString;
+        if (checkBoxWhippedCream == true) checkBoxWhippedCreamString = getString(R.string.check_box_true);
+        else checkBoxWhippedCreamString = getString(R.string.check_box_false);
+        if (checkBoxChocolate == true) checkBoxChocolateString = getString(R.string.check_box_true);
+        else checkBoxChocolateString = getString(R.string.check_box_false);
+
+
+
         String name = nameEditText.getText().toString();
+
         String Message = getString(R.string.order_summary_name, name);
-        Message += "\n" + getString(R.string.add_whipped_cream) + checkBoxWhippedCream;
-        Message += "\n" + getString(R.string.add_chocolate) + checkBoxChocolate;
+        Message += "\n" + getString(R.string.add_whipped_cream) + checkBoxWhippedCreamString;
+        Message += "\n" + getString(R.string.add_chocolate) + checkBoxChocolateString;
         Message += "\n" + getString(R.string.quantity) + ": " + quantity;
-        Message += "\n" + getString(R.string.total) + calculatePrise ();
+        Message += "\n" + getString(R.string.total) + calculatePrise();
         Message += "\n" + getString(R.string.thank_you);
         return Message;
     }
+
     public void increment(View view) {
         Log.i("info", "calling increment method");
         if (quantity < 100) {
-            quantity = quantity+1;
-            displayQuantity (quantity);
+            quantity = quantity + 1;
+            displayQuantity(quantity);
         } else {
-            Toast toastIncrement = Toast.makeText(getApplicationContext(), "You cannot have more than 100 coffee", Toast.LENGTH_SHORT);
+            Toast toastIncrement = Toast.makeText(getApplicationContext(), getString(R.string.more_100_coffee), Toast.LENGTH_SHORT);
             toastIncrement.show();
             return;
         }
-
     }
+
     public void decrement(View view) {
         Log.i("info", "calling decrement method");
         if (quantity > 1) {
             quantity = quantity - 1;
             displayQuantity(quantity);
-        }
-        else {
-            Toast toastDecrement = Toast.makeText(getApplicationContext(), "You cannot have less than 1 coffee", Toast.LENGTH_SHORT);
+        } else {
+            Toast toastDecrement = Toast.makeText(getApplicationContext(), getString(R.string.less_1_coffee), Toast.LENGTH_SHORT);
             toastDecrement.show();
-            return;}
+            return;
+        }
     }
+
     /**
      * This method displays the given quantity value on the screen.
      */
